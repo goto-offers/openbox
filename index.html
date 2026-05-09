@@ -1,1 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Premium Country Selector</title>
 
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:
+      radial-gradient(circle at top left,#3b0764,#0f172a 40%,#020617 100%);
+      overflow:hidden;
+      padding:20px;
+      color:#fff;
+    }
+
+    /* background glow */
+    body::before{
+      content:"";
+      position:absolute;
+      width:350px;
+      height:350px;
+      background:#ff0080;
+      filter:blur(140px);
+      top:-120px;
+      left:-120px;
+      opacity:0.35;
+    }
+
+    body::after{
+      content:"";
+      position:absolute;
+      width:300px;
+      height:300px;
+      background:#00bfff;
+      filter:blur(140px);
+      bottom:-120px;
+      right:-120px;
+      opacity:0.25;
+    }
+
+    .container{
+      position:relative;
+      z-index:2;
+      width:100%;
+      max-width:1050px;
+      text-align:center;
+    }
+
+    h1{
+      font-size:48px;
+      margin-bottom:45px;
+      font-weight:700;
+      letter-spacing:1px;
+      text-shadow:0 0 20px rgba(255,255,255,0.15);
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:25px;
+      margin-bottom:45px;
+    }
+
+    .card{
+      position:relative;
+      border-radius:28px;
+      overflow:hidden;
+      cursor:pointer;
+      transition:0.35s ease;
+      border:2px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.05);
+      backdrop-filter:blur(10px);
+      box-shadow:
+      0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    .card:hover{
+      transform:translateY(-8px) scale(1.02);
+      border-color:#ff0080;
+      box-shadow:
+      0 0 25px rgba(255,0,128,0.45);
+    }
+
+    .card.selected{
+      border-color:#ff0080;
+      box-shadow:
+      0 0 30px rgba(255,0,128,0.6);
+      transform:scale(1.03);
+    }
+
+    .card img{
+      width:100%;
+      height:300px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .overlay{
+      position:absolute;
+      bottom:0;
+      left:0;
+      width:100%;
+      padding:22px;
+      background:linear-gradient(to top,rgba(0,0,0,0.95),transparent);
+      text-align:center;
+    }
+
+    .overlay h2{
+      font-size:34px;
+      font-weight:700;
+    }
+
+    .continue-btn{
+      width:100%;
+      max-width:520px;
+      padding:20px;
+      border:none;
+      border-radius:18px;
+      background:rgba(255,255,255,0.12);
+      color:#aaa;
+      font-size:28px;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.35s ease;
+      backdrop-filter:blur(12px);
+    }
+
+    .continue-btn.active{
+      background:linear-gradient(135deg,#ff0080,#7c3aed);
+      color:white;
+      box-shadow:
+      0 0 25px rgba(255,0,128,0.5);
+    }
+
+    .continue-btn:hover{
+      transform:scale(1.02);
+    }
+
+    @media(max-width:768px){
+
+      h1{
+        font-size:30px;
+        margin-bottom:30px;
+      }
+
+      .cards{
+        grid-template-columns:1fr 1fr;
+        gap:15px;
+      }
+
+      .card img{
+        height:220px;
+      }
+
+      .overlay h2{
+        font-size:22px;
+      }
+
+      .continue-btn{
+        font-size:22px;
+        padding:16px;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <h1>Please Select your Country</h1>
+
+  <div class="cards">
+
+    <!-- INDIA -->
+    <div class="card" onclick="selectOption('india', this)">
+      <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India">
+
+      <div class="overlay">
+        <h2>India 🇮🇳</h2>
+      </div>
+    </div>
+
+    <!-- PAKISTAN -->
+    <div class="card" onclick="selectOption('pakistan', this)">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Flag_of_Pakistan.svg" alt="Pakistan">
+
+      <div class="overlay">
+        <h2>Pakistan 🇵🇰</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="continue-btn" id="continueBtn" onclick="goNext()">
+    CONTINUE
+  </button>
+
+</div>
+
+<script>
+
+let selected = "";
+
+function selectOption(country, element){
+
+  selected = country;
+
+  document.querySelectorAll('.card').forEach(card=>{
+    card.classList.remove('selected');
+  });
+
+  element.classList.add('selected');
+
+  document
+  .getElementById('continueBtn')
+  .classList.add('active');
+}
+
+function goNext(){
+
+  if(selected === "india"){
+    window.location.href = "https://your-india-url.com";
+  }
+
+  else if(selected === "pakistan"){
+    window.location.href = "https://your-pakistan-url.com";
+  }
+
+  else{
+    alert("Please select your country");
+  }
+
+}
+
+</script>
+
+</body>
+</html>
